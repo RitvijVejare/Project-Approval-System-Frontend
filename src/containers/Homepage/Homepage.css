@@ -1,0 +1,12 @@
+.home-route ul{
+  list-style: none;
+}
+
+.home-route ul li a{
+  text-decoration: none;
+  color: red;
+}
+
+.home-route li a:hover{
+  color: salmon;
+}
