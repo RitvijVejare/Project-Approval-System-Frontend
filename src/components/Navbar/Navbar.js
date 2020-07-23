@@ -1,10 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Navbar.css"
 
 const Navbar = () => {
+
+  const [search, SetSearch] = useState(false)
+
+  const SubmitSearch = (e) => {
+    e.preventDefault();
+    alert('Searched')
+  }
+
+  const openSearch = () => {
+    SetSearch(true)
+  }
+
+  const SearchClass = search ? 'search-input active' : 'search-input'
+
   return (
     <div>
-      <h1>Navbar</h1>
+      <nav className="navbar">
+        <ul>
+          <li><a href="/">Signin</a></li>
+          <li><a href="/">Sign Out</a></li>
+        </ul>
+
+        <div className="search">
+          <form onSubmit={SubmitSearch}>
+            <input type="text" placeholder="search" className={SearchClass} />
+            <img onClick={openSearch} src={require('../../assets/icons/search1.png')} alt="search" className="search-image" />
+          </form>
+
+        </div>
+      </nav>
     </div>
   )
 }

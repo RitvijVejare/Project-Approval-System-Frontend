@@ -6,11 +6,11 @@ const Homepage = () => {
   return (
     <div className="home-route">
       <ul>
-        <li><NavLink to="/"><h1>HOME</h1></NavLink></li>
-        <li><NavLink to="/admin"><h1>ADMIN</h1></NavLink></li>
-        <li><NavLink to="/internal-guide"><h1>INTERNAL GUIDE</h1></NavLink></li>
-        <li><NavLink to="/project-incharge"><h1>PROJECT INCHARGE</h1></NavLink></li>
-        <li><NavLink to="/student"><h1>STUDENT</h1></NavLink></li>
+        <li><NavLink to="/">HOME</NavLink></li>
+        <li><NavLink to="/admin">ADMIN</NavLink></li>
+        <li><NavLink to="/internal-guide">INTERNAL GUIDE</NavLink></li>
+        <li><NavLink to="/project-incharge">PROJECT INCHARGE</NavLink></li>
+        <li><NavLink to="/student">STUDENT</NavLink></li>
       </ul>
     </div>
   )

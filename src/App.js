@@ -6,11 +6,13 @@ import Admin from './containers/Adminpage/Admin';
 import InternalGuide from './containers/InternalGuidepage/InternalGuide';
 import ProjectIncharge from './containers/ProjectInchargepage/ProjectIncharge';
 import Studentpage from './containers/Studentpage/Studentpage';
+import Navbar from './components/Navbar/Navbar';
 
 function App() {
   return (
     <Router>
       <div className="App">
+        <Navbar />
         <Route path="/" exact component={Homepage} />
         <Route path="/admin" exact component={Admin} />
         <Route path="/internal-guide" exact component={InternalGuide} />
