@@ -1,5 +1,6 @@
 .home-route ul{
   list-style: none;
+  padding: 0;
 }
 
 .home-route ul li a{

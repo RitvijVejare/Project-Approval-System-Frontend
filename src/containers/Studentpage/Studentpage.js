@@ -1,12 +1,11 @@
-import React from 'react'
-import "./Studentpage.css"
+import React from "react";
+import Select from "react-select";
+import UserDetails from "../../components/UserDetails/UserDetails";
 
-const Studentpage = () => {
-  return (
-    <div>
-      <h1>STUDENT PAGE</h1>
-    </div>
-  )
+class Studentpage extends React.Component {
+  render() {
+    return <UserDetails />;
+  }
 }
 
-export default Studentpage
+export default Studentpage;

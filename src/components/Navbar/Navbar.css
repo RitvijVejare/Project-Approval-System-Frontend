@@ -1,22 +1,22 @@
-.navbar{
+.navbar {
   display: flex;
   justify-content: space-between;
-  background-color:cornflowerblue;
+  background-color: none;
 }
 
-.navbar ul{
+.navbar ul {
   margin: 10px 0;
   padding: 0;
-  
+
   display: inline-block;
 }
 
-.navbar ul li{
+.navbar ul li {
   display: inline-block;
   list-style: none;
 }
 
-.navbar ul li a{
+.navbar ul li a {
   text-decoration: none;
   display: block;
   font-size: 20px;
@@ -26,30 +26,30 @@
   padding: 0 10px;
 }
 
-.navbar ul li a:hover{
-  color: #fff;
+.navbar ul li a:hover {
+  color: goldenrod;
 }
 
-.search form{
+.search form {
   display: flex;
   padding: 8px;
   height: 32px;
 }
 
-.search-input{
+.search-input {
   border: 0;
   width: 0;
   transition: 0.2s ease-in;
 }
 
-.search-input.active{
+.search-input.active {
   width: 150px;
 }
 
-.search-input:focus{
+.search-input:focus {
   outline: none;
 }
 
-.search-image{
+.search-image {
   cursor: pointer;
 }

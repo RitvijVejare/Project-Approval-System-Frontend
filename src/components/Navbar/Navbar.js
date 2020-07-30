@@ -1,39 +1,42 @@
-import React, { useEffect, useState } from 'react'
-import "./Navbar.css"
+import React, { useEffect, useState } from "react";
+import "./Navbar.css";
 
 const Navbar = () => {
+  const [search, SetSearch] = useState(false);
 
-  const [search, SetSearch] = useState(false)
-
-  const SubmitSearch = (e) => {
+  const SubmitSearch = e => {
     e.preventDefault();
-    alert('Searched')
-  }
+    alert("Searched");
+  };
 
   const openSearch = () => {
-    SetSearch(true)
-  }
+    SetSearch(true);
+  };
 
-  const SearchClass = search ? 'search-input active' : 'search-input'
+  const SearchClass = search ? "search-input active" : "search-input";
 
   return (
     <div>
       <nav className="navbar">
         <ul>
-          <li><a href="/">Signin</a></li>
-          <li><a href="/">Sign Out</a></li>
+          <li>
+            <a href="/">Signin</a>
+          </li>
+          <li>
+            <a href="/">Sign Out</a>
+          </li>
         </ul>
 
-        <div className="search">
+        {/* <div className="search">
           <form onSubmit={SubmitSearch}>
             <input type="text" placeholder="search" className={SearchClass} />
             <img onClick={openSearch} src={require('../../assets/icons/search1.png')} alt="search" className="search-image" />
           </form>
 
-        </div>
+        </div> */}
       </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
