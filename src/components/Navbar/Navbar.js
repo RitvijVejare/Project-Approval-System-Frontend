@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [search, SetSearch] = useState(false);
@@ -20,10 +21,10 @@ const Navbar = () => {
       <nav className="navbar">
         <ul>
           <li>
-            <a href="/">Signin</a>
+            <NavLink to="/login">Login</NavLink>
           </li>
           <li>
-            <a href="/">Sign Out</a>
+            <a href="">Sign Out</a>
           </li>
         </ul>
 
