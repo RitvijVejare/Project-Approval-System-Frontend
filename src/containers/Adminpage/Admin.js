@@ -1,13 +1,63 @@
-import React from 'react'
-import "./Admin.css"
+import "./Admin.css";
+import React, { Component } from "react";
 
-const Admin = (props) => {
-  return (
-    <div>
-      <h1>Admin page</h1>
-    </div>
-  )
+class Admin extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      mail: "",
+      dept: "Computer Science"
+    };
+  }
+
+  mailHandler = event => {
+    this.setState({ mail: event.target.value });
+  };
+
+  deptHandler = event => {
+    this.setState({ dept: event.target.value });
+  };
+
+  submitHandler = event => {
+    event.preventDefault();
+    const { mail, dept } = this.state;
+    alert(`dept:${dept} \n mail:${mail}`);
+  };
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.submitHandler}>
+          <label>Admin Email:</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="enter email"
+            value={this.state.mail}
+            onChange={this.mailHandler}
+          />
+          <br />
+          <br />
+          <label>Select Department</label>
+          <br />
+          <div className="select-admin-container">
+            <select onChange={this.deptHandler} value={this.state.dept}>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Information Technology">
+                Information Technology
+              </option>
+              <option value="Electronics And Telecommunication">
+                Electronics And Telecommunication
+              </option>
+              <option value="Electronics">Electronics</option>
+            </select>
+          </div>
+          <button type="submit">Create Admin</button>
+        </form>
+      </div>
+    );
+  }
 }
 
-export default Admin
-
+export default Admin;

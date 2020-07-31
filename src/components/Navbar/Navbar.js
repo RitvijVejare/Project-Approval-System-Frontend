@@ -24,7 +24,7 @@ const Navbar = () => {
             <NavLink to="/login">Login</NavLink>
           </li>
           <li>
-            <a href="">Sign Out</a>
+            <NavLink to="/">Sign Out</NavLink>
           </li>
         </ul>
 
@@ -33,7 +33,6 @@ const Navbar = () => {
             <input type="text" placeholder="search" className={SearchClass} />
             <img onClick={openSearch} src={require('../../assets/icons/search1.png')} alt="search" className="search-image" />
           </form>
-
         </div> */}
       </nav>
     </div>

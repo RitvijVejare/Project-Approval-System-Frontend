@@ -1,10 +1,14 @@
 import React from 'react'
 import "./HOD.css"
+import ProjectContextProvider from '../../context/projectcontext'
+import ProjectList from '../../components/verification/projectlist'
 
-const HOD = (props) => {
+const HOD = () => {
   return (
     <div>
-      <h1>HOD PAGE</h1>
+      <ProjectContextProvider>
+        <ProjectList />
+      </ProjectContextProvider>
     </div>
   )
 }

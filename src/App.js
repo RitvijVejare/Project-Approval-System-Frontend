@@ -7,8 +7,10 @@ import InternalGuide from "./containers/InternalGuidepage/InternalGuide";
 import ProjectIncharge from "./containers/ProjectInchargepage/ProjectIncharge";
 import Studentpage from "./containers/Studentpage/Studentpage";
 import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/footer";
+import Footer from "./components/Footer/Footer";
 import HOD from "./containers/HODpage/HOD";
+import ProjectFormHolder from "./components/verification/projectformholder";
+
 import LoginPage from "./containers/LoginPage/LoginPage";
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
         <Route path="/project-incharge" exact component={ProjectIncharge} />
         <Route path="/student" exact component={Studentpage} />
         <Route path="/hod" exact component={HOD} />
+        <Route path="/projectform" exact component={ProjectFormHolder} />
         <Route path="/login" exact component={LoginPage} />
         <footer>
           <Footer />
