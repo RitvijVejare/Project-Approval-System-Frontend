@@ -24,7 +24,7 @@ const Navbar = () => {
             <NavLink to="/login">Login</NavLink>
           </li>
           <li>
-            <a href="">Sign Out</a>
+            <NavLink to="/">Sign Out</NavLink>
           </li>
         </ul>
 

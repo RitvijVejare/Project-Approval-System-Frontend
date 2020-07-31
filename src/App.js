@@ -1,4 +1,3 @@
-
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from "react-router-dom"
@@ -11,7 +10,6 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer'
 import HOD from './containers/HODpage/HOD';
 import ProjectFormHolder from './components/verification/projectformholder';
-
 
 import LoginPage from "./containers/LoginPage/LoginPage";
 
