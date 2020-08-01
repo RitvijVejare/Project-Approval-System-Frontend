@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-const port = "http://localhost:8000/user";
+const SERVER_URL = "http://127.0.0.1:3000";
 
 export default class LoginPage extends Component {
   constructor(props) {
@@ -26,22 +26,33 @@ export default class LoginPage extends Component {
     event.preventDefault();
     const { username, password } = this.state;
     alert(`username:${username} \n password:${password}`);
+    /*axios
+      .post(SERVER_URL+"/login",{
+        email : username,
+        password :  password
+      }).then(response => {
+        console.log(response);
+        //this.setState({ user: user.data });
+      });*/
   };
 
   componentDidMount() {
+    const { username, password } = this.state;
     axios
-      .get(port)
-
+      .post(SERVER_URL+"/login",{
+        email : username,
+        password :  password
+      })
       .then(response => {
         console.log(response);
-        this.setState({ user: user.data });
+        //this.setState({ user: user.data });
       });
   }
 
   render() {
     return (
       <div>
-        <form action="/login" method="post" onSubmit={this.submitHandler}>
+        <form method="post" onSubmit={this.submitHandler}>
           <label>Username </label>
           <input
             type="email"
