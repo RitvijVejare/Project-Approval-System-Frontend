@@ -1,4 +1,5 @@
 var express = require('express');
+var cors = require('cors')
 var routes = require('./routes');
 var passport = require('passport');
 var flash = require('express-flash');
@@ -28,11 +29,13 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Cross Origin Resource Sharing
+app.use(cors());
 
 //routes
 app.use('/',routes);
 
 
-var port = 3000;
+var port = 8000;
 app.listen(port);
 console.log("Server Is Online at port "+port);
