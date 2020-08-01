@@ -70,7 +70,7 @@ passport.use(new localStrategy({usernameField:'email'},function(email,password,d
 		if (err) return done(err);
 		if (user == null) return done(null,false,{message:"No User With That Email"});
 		bcrypt.compare(password,user.password,function(err,result){
-			if (result) return done(null,user,{message:"Successfully Logged In"});
+			if (result) return done(null,user,{message:"Successfully Logged In"});	
 			else return done(null,false,{message:"Invalid password"});
 		});
 	});

@@ -4,21 +4,14 @@ var dbm = require('./Controllers/dbm');
 var passport = dbm.passport;
 require('dotenv').config();
 
-
 router.get('/user',function(req,res){
-	console.log("REQUESt");
-	if (req.user){
-		res.json(req.user);	
-	}else{
-		res.send("Invalid User");
-	}
+	console.log(JSON.stringify(res.user));
+	res.json(req.user);
 });
 
-router.post('/login',passport.authenticate('local',{
-	successRedirect : '/user',
-	failureRedirect : '/user', // Front End
-	failureFlash : true,
-}));
+router.post('/login',passport.authenticate('local'),function(req,res){
+	res.json(req.user);
+});
 
 router.get('/logout', function(req, res){
 	req.logout();

@@ -30,7 +30,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Cross Origin Resource Sharing
-app.use(cors());
+app.use(cors({
+	credentials: true,
+	origin: 'http://localhost:3000'
+}));
 
 //routes
 app.use('/',routes);
