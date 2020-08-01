@@ -6,10 +6,11 @@ require('dotenv').config();
 
 
 router.get('/user',function(req,res){
+	console.log("REQUESt");
 	if (req.user){
 		res.json(req.user);	
 	}else{
-		res.send(null);
+		res.send("Invalid User");
 	}
 });
 
