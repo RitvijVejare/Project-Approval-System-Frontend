@@ -4,9 +4,9 @@ var userSchema = new mongoose.Schema({
 	email : String,
 	password : String,
 	type : String,
-	admin_id : String,
+	admin : {type : mongoose.Schema.Types.ObjectId,ref : 'User'},
 	department : String,
-	projectName : String,
+	groupName : String,
 });
 
 var User = mongoose.model('User',userSchema);

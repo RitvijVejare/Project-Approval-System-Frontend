@@ -44,12 +44,12 @@ router.post('/yami',function(req,res){
 	//department : department
 	email = req.body.email;
 	department = req.body.department;
-	dbm.addToDatabase(email,department,"admin");
+	dbm.addToDatabase(null,email,department,"admin");
 	res.status(200).send("Done") ;
-})
+});
 
 
-router.post('/admin',function(req,res){
+router.post('/admin',async function(req,res){
 	if (!req.user) return res.status(404).send();
 	if (req.user.type != 'admin') return res.status(404).send();
 	
@@ -73,11 +73,12 @@ router.post('/admin',function(req,res){
 			atributes = lines[i].split(',');
 			email = atributes[0];
 			projectName = atributes[1];
-			dbm.addToDatabase(req.user,email,department,"student", projectName);
+			await dbm.addToDatabase(req.user,email,department,"student", projectName);
 		}
-		dbm.addToDatabase(req.user,req.body.hod,department,"hod") ;
-		dbm.addToDatabase(req.user,req.body.pic,department,"pic") ;
-		dbm.addToDatabase(req.user,req.body.ig,department,"ig");
+		await dbm.addToDatabase(req.user,req.body.hod,department,"hod") ;
+		await dbm.addToDatabase(req.user,req.body.pic,department,"pic") ;
+		await dbm.addToDatabase(req.user,req.body.ig,department,"ig");
+		dbm.generateGroups(req.user);
 		res.send("Added  To Database ");
 	}
 });
