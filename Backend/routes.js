@@ -5,7 +5,7 @@ var passport = dbm.passport;
 require('dotenv').config();
 
 router.get('/user',function(req,res){
-	console.log(JSON.stringify(res.user));
+	console.log(JSON.stringify(req.user));
 	res.json(req.user);
 });
 
@@ -15,10 +15,25 @@ router.post('/login',passport.authenticate('local'),function(req,res){
 
 router.get('/logout', function(req, res){
 	req.logout();
-	res.redirect('/user');
+	res.status(200).send("logout Out Successfully");
 });
 
-//router.post('/changePassword',function(req,res){});
+router.post('/changePassword',function(req,res){
+	if (!req.isAuthenticated()) return res.status(404).send();
+
+	// newPassword , confirmPassword
+	if (req.body.newPassword !== req.body.confirmPassword)
+		return res.status(422).send("Two Fields Doesn't match");
+
+	let result = dbm.changePassword(req.user,req.body.newPassword);
+	if (result) {
+		req.logout();
+		return res.status(200).send("Your password was changed please login again");
+	}
+	else 
+		return res.status(500).send();
+		
+});
 
 
 router.post('/yami',function(req,res){

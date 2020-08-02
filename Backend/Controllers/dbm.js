@@ -35,6 +35,21 @@ function makePassword(length) {
 	}
 	return result;
 }
+function changePassword(user,newPassword){
+	return User.findById(user.id, function(err,user){
+		if (err) return false;
+		return bcrypt.hash(newPassword,10,function(err,hash){
+			if (err) return false;
+			user.password = hash;
+			return user.save(function(err,user){
+				if (err) return false;
+				else return true;
+			});
+		});
+	})
+	
+}
+
 function saveLocallyForDevelopment(email,password){
 	line = email+","+password +"\n";
 	fs.appendFile('credentials.txt',line,function(err){
@@ -85,8 +100,8 @@ passport.deserializeUser(function(id,done){
 	});
 });
 
-
 module.exports = {
 	addToDatabase : addToDatabase,	
 	passport : passport ,
+	changePassword : changePassword,
 }
