@@ -17,3 +17,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+input {
+  font-family: "Recursive", sans-serif;
+}
+
+button {
+  font-family: "Recursive", sans-serif;
+}
+
+select {
+  font-family: "Recursive", sans-serif;
+}
