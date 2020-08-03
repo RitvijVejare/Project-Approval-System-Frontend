@@ -28,8 +28,14 @@ class Admin extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.submitHandler}>
-          <label>Admin Email:</label>
+        <form onSubmit={this.submitHandler} className="yami-form">
+          <div className="yami-title">
+            <label>Create Admin</label>
+          </div>
+          <label className="yami-label">Admin Email:</label>
+          <br />
+          <br />
+
           <input
             type="email"
             name="email"
@@ -39,7 +45,8 @@ class Admin extends Component {
           />
           <br />
           <br />
-          <label>Select Department</label>
+          <label className="yami-label">Select Department</label>
+          <br />
           <br />
           <div className="select-admin-container">
             <select onChange={this.deptHandler} value={this.state.dept}>
@@ -53,7 +60,9 @@ class Admin extends Component {
               <option value="Electronics">Electronics</option>
             </select>
           </div>
-          <button type="submit">Create Admin</button>
+          <button type="submit" className="yami-btn">
+            Create Admin
+          </button>
         </form>
       </div>
     );

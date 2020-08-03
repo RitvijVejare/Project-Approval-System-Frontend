@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import qs from 'qs'
+import qs from "qs";
+import "./LoginPage.css";
 //axios.defaults.withCredentials = true
 
 const SERVER_URL = "http://127.0.0.1:8000";
@@ -28,25 +29,26 @@ export default class LoginPage extends Component {
     event.preventDefault();
     const { username, password } = this.state;
     //alert(`username:${username} \n password:${password}`);
-    
-    axios({
-        method: 'post',
-        url: SERVER_URL + '/login',
-        credentials: 'include',
-        withCredentials : true,
-        data: qs.stringify({
-            email: username,
-            password: password
-        }),
-        headers: {
-        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-        }
-    }).then(function(res){
-        console.log(res);
 
-    }).catch(function(err){
+    axios({
+      method: "post",
+      url: SERVER_URL + "/login",
+      credentials: "include",
+      withCredentials: true,
+      data: qs.stringify({
+        email: username,
+        password: password
+      }),
+      headers: {
+        "content-type": "application/x-www-form-urlencoded;charset=utf-8"
+      }
+    })
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (err) {
         console.log(err);
-    });
+      });
     /*
     axios.post(SERVER_URL+"/login",qs.stringify({
             email: username,
@@ -66,7 +68,6 @@ export default class LoginPage extends Component {
   };
 
   componentDidMount() {
-    
     /*const { username, password } = this.state;
     axios
       .post(SERVER_URL+"/login",{
@@ -82,9 +83,22 @@ export default class LoginPage extends Component {
   render() {
     return (
       <div>
-        <form method="post" onSubmit={this.submitHandler}>
-          <label>Username </label>
+        <form
+          method="post"
+          onSubmit={this.submitHandler}
+          className="login-form"
+        >
+          <div className="login-title">
+            <label>Login</label>
+          </div>
+
+          <br />
+          <br />
+          <label className="login-label">Username </label>
+          <br />
+          <br />
           <input
+            className="login-input"
             type="email"
             name="email"
             placeholder="username"
@@ -92,8 +106,11 @@ export default class LoginPage extends Component {
           />
           <br />
           <br />
-          <label>Password </label>
+          <label className="login-label">Password </label>
+          <br />
+          <br />
           <input
+            className="login-input"
             type="password"
             name="password"
             placeholder="password"
@@ -101,10 +118,11 @@ export default class LoginPage extends Component {
           />
           <br />
           <br />
-          <button type="submit">submit</button>
+          <button type="submit" className="login-btn">
+            Login
+          </button>
         </form>
       </div>
     );
   }
 }
-
