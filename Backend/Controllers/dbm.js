@@ -8,7 +8,6 @@ var passport  = require('passport');
 var localStrategy = require('passport-local').Strategy;
 
 // internal guide => 
-
 mongoose.connect(process.env.uri,{
 	useNewUrlParser : true,
 	useUnifiedTopology: true
