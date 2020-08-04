@@ -8,14 +8,12 @@ const ProjectDetails = (project) => {
     //     ProjectForm(pro_to_show);
     // } 
     return (
-            <li>
-                <NavLink to={{pathname:"/projectform",aboutProps:{project}}}>
-                    <div>
-                        <label className="title"> Title : {project.project.title}</label>
-                        <label className="id"> ID : {project.project.id}</label>
-                    </div>
-                </NavLink>
-            </li>
+            <NavLink to={{pathname:"/projectform",aboutProps:{project}}}>
+                <div>
+                    <label className="title"> Title : {project.project.title}</label>
+                    <label className="id"> ID : {project.project.id}</label>
+                </div>
+            </NavLink>
      );
 }
  
