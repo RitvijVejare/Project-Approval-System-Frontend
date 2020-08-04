@@ -42,6 +42,7 @@ class Admin extends Component {
             placeholder="enter email"
             value={this.state.mail}
             onChange={this.mailHandler}
+            required
           />
           <br />
           <br />
