@@ -6,29 +6,24 @@ var fs = require("fs");
 require("dotenv").config();
 var passport = require("passport");
 var localStrategy = require("passport-local").Strategy;
+ 
+mongoose.connect(process.env.uri,{
+	useNewUrlParser : true,
+	useUnifiedTopology: true
+	},function(err){
+	if (err){
+		console.log(err);
+	}else{
+		console.log("Connected to database");
+		// CUSTOM CHANGE TO DATABASE HERE 
+		// User.deleteMany({type:'student'},function(err){if (err) throw err; else console.log('deleted all students') });
+		// User.deleteMany({type:'ig'},function(err){if (err) throw err; else console.log('deleted IG') });
+		// User.deleteMany({type:'pic'},function(err){if (err) throw err; else console.log('deleted PIC') });
+		// User.deleteMany({type:'hod'},function(err){if (err) throw err; else console.log('deleted HOD') });
+		// Group.deleteMany({},function(err){if (err) throw err; else console.log('deleted Groups') });
+	}
+});
 
-// internal guide =>
-
-mongoose.connect(
-  process.env.uri,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  },
-  function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Connected to database");
-      // CUSTOM CHANGE TO DATABASE HERE
-      // User.deleteMany({type:'student'},function(err){if (err) throw err; else console.log('deleted all students') });
-      // User.deleteMany({type:'ig'},function(err){if (err) throw err; else console.log('deleted IG') });
-      // User.deleteMany({type:'pic'},function(err){if (err) throw err; else console.log('deleted PIC') });
-      // User.deleteMany({type:'hod'},function(err){if (err) throw err; else console.log('deleted HOD') });
-      // Group.deleteMany({},function(err){if (err) throw err; else console.log('deleted Groups') });
-    }
-  }
-);
 
 function makePassword(length) {
   var result = "";

@@ -103,6 +103,7 @@ export default class LoginPage extends Component {
             name="email"
             placeholder="username"
             onChange={this.usernameHandler}
+            required="true"
           />
           <br />
           <br />
@@ -115,6 +116,7 @@ export default class LoginPage extends Component {
             name="password"
             placeholder="password"
             onChange={this.passwordHandler}
+            required="true"
           />
           <br />
           <br />
