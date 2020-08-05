@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var User = require("../models/User");
+var Group = require("../models/Group");
 var bcrypt = require("bcrypt");
 var fs = require("fs");
 require("dotenv").config();
@@ -20,12 +21,11 @@ mongoose.connect(
     } else {
       console.log("Connected to database");
       // CUSTOM CHANGE TO DATABASE HERE
-      /*
-		User.find({type:'student'},function(err,data){
-			for (i = 0 ; i < data.length ; i++){
-				console.log(data[i].email);
-			}
-		});*/
+      // User.deleteMany({type:'student'},function(err){if (err) throw err; else console.log('deleted all students') });
+      // User.deleteMany({type:'ig'},function(err){if (err) throw err; else console.log('deleted IG') });
+      // User.deleteMany({type:'pic'},function(err){if (err) throw err; else console.log('deleted PIC') });
+      // User.deleteMany({type:'hod'},function(err){if (err) throw err; else console.log('deleted HOD') });
+      // Group.deleteMany({},function(err){if (err) throw err; else console.log('deleted Groups') });
     }
   }
 );
@@ -40,6 +40,7 @@ function makePassword(length) {
   }
   return result;
 }
+
 function changePassword(user, newPassword) {
   return User.findById(user.id, function (err, user) {
     if (err) return false;
@@ -53,7 +54,6 @@ function changePassword(user, newPassword) {
     });
   });
 }
-
 function saveLocallyForDevelopment(email, password) {
   line = email + "," + password + "\n";
   fs.appendFile("credentials.txt", line, function (err) {
@@ -61,25 +61,40 @@ function saveLocallyForDevelopment(email, password) {
   });
 }
 
-function addToDatabase(admin, email, department, type, projectName = null) {
+function generateGroups(admin) {
+  User.find({ type: "student", admin: admin.id }, async function (err, users) {
+    for (let i = 0; i < users.length; i++) {
+      let user = users[i];
+      let group = await Group.findOne({ name: user.groupName });
+      if (!group) {
+        group = await Group({
+          name: user.groupName,
+          members: [],
+          admin: admin.id
+        });
+      }
+      group.members.push(user.id);
+      await group.save();
+    }
+  });
+}
+
+async function addToDatabase(admin, email, department, type, groupName = null) {
   password = makePassword(8);
   saveLocallyForDevelopment(email, password);
-  bcrypt.hash(password, 10, function (err, hash) {
-    if (err) throw err;
-    var user = User();
-    user.email = email;
-    user.password = hash;
-    user.department = department;
-    user.type = type;
-    user.admin_id = admin.id;
-    if (projectName) {
-      user.projectName = projectName;
-    }
-    user.save(function (err, user) {
-      if (err) throw err;
-      else console.log("Added ", user.email);
-    });
-  });
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
+  var user = User();
+  user.email = email;
+  user.password = hash;
+  user.department = department;
+  user.type = type;
+  if (admin) user.admin = admin.id;
+  if (groupName) {
+    var name = groupName.toLowerCase().trim().replace(/ /g, "");
+    user.groupName = name;
+  }
+  await user.save();
 }
 
 passport.use(
@@ -113,5 +128,6 @@ passport.deserializeUser(function (id, done) {
 module.exports = {
   addToDatabase: addToDatabase,
   passport: passport,
-  changePassword: changePassword
+  changePassword: changePassword,
+  generateGroups: generateGroups
 };
