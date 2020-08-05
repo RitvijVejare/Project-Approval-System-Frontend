@@ -1,13 +1,12 @@
-var mongoose = require('mongoose');
-var User = require('../models/User');
-var Group = require('../models/Group');
-var bcrypt = require('bcrypt');
-var fs = require('fs');
-require('dotenv').config();
-var passport  = require('passport');
-var localStrategy = require('passport-local').Strategy;
-
-// internal guide => 
+var mongoose = require("mongoose");
+var User = require("../models/User");
+var Group = require("../models/Group");
+var bcrypt = require("bcrypt");
+var fs = require("fs");
+require("dotenv").config();
+var passport = require("passport");
+var localStrategy = require("passport-local").Strategy;
+ 
 mongoose.connect(process.env.uri,{
 	useNewUrlParser : true,
 	useUnifiedTopology: true
@@ -25,92 +24,105 @@ mongoose.connect(process.env.uri,{
 	}
 });
 
+
 function makePassword(length) {
-	var result = '';
-	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	var charactersLength = characters.length;
-	for ( var i = 0; i < length; i++ ) {
-	  result += characters.charAt(Math.floor(Math.random() * charactersLength));
-	}
-	return result;
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
 }
 
-function changePassword(user,newPassword){
-	return User.findById(user.id, function(err,user){
-		if (err) return false;
-		return bcrypt.hash(newPassword,10,function(err,hash){
-			if (err) return false;
-			user.password = hash;
-			return user.save(function(err,user){
-				if (err) return false;
-				else return true;
-			});
-		});
-	});
+function changePassword(user, newPassword) {
+  return User.findById(user.id, function (err, user) {
+    if (err) return false;
+    return bcrypt.hash(newPassword, 10, function (err, hash) {
+      if (err) return false;
+      user.password = hash;
+      return user.save(function (err, user) {
+        if (err) return false;
+        else return true;
+      });
+    });
+  });
 }
-function saveLocallyForDevelopment(email,password){
-	line = email+","+password +"\n";
-	fs.appendFile('credentials.txt',line,function(err){
-		if(err) throw err;
-	})
-}
-
-function generateGroups(admin){
-	User.find({type:'student',admin:admin.id},async function(err,users){
-		for ( let i = 0 ; i < users.length ; i++){
-			let user = users[i];
-			let group = await Group.findOne({name:user.groupName});
-			if (!group){
-				group = await Group({name:user.groupName,members:[],admin:admin.id});
-			}
-			group.members.push(user.id);
-			await group.save();
-		}
-	});
-};
-
-async function addToDatabase(admin,email,department,type,groupName=null){
-	password = makePassword(8);
-	saveLocallyForDevelopment(email,password);
-	const salt = bcrypt.genSaltSync(10);
-	const hash = bcrypt.hashSync(password, salt);
-	var user  = User();
-	user.email = email;
-	user.password = hash;
-	user.department = department;
-	user.type = type;
-	if (admin)
-		user.admin = admin.id;
-	if (groupName) {
-		var name = groupName.toLowerCase().trim().replace(/ /g,'');
-		user.groupName = name;
-	}
-	await user.save();
+function saveLocallyForDevelopment(email, password) {
+  line = email + "," + password + "\n";
+  fs.appendFile("credentials.txt", line, function (err) {
+    if (err) throw err;
+  });
 }
 
-passport.use(new localStrategy({usernameField:'email'},function(email,password,done){
-	User.findOne({email:email},function(err,user){
-		if (err) return done(err);
-		if (user == null) return done(null,false,{message:"No User With That Email"});
-		bcrypt.compare(password,user.password,function(err,result){
-			if (result) return done(null,user,{message:"Successfully Logged In"});	
-			else return done(null,false,{message:"Invalid password"});
-		});
-	});
-}));
-passport.serializeUser(function(user,done){
-	done(null,user.id)
+function generateGroups(admin) {
+  User.find({ type: "student", admin: admin.id }, async function (err, users) {
+    for (let i = 0; i < users.length; i++) {
+      let user = users[i];
+      let group = await Group.findOne({ name: user.groupName });
+      if (!group) {
+        group = await Group({
+          name: user.groupName,
+          members: [],
+          admin: admin.id
+        });
+      }
+      group.members.push(user.id);
+      await group.save();
+    }
+  });
+}
+
+async function addToDatabase(admin, email, department, type, groupName = null) {
+  password = makePassword(8);
+  saveLocallyForDevelopment(email, password);
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
+  var user = User();
+  user.email = email;
+  user.password = hash;
+  user.department = department;
+  user.type = type;
+  if (admin) user.admin = admin.id;
+  if (groupName) {
+    var name = groupName.toLowerCase().trim().replace(/ /g, "");
+    user.groupName = name;
+  }
+  await user.save();
+}
+
+passport.use(
+  new localStrategy({ usernameField: "email" }, function (
+    email,
+    password,
+    done
+  ) {
+    User.findOne({ email: email }, function (err, user) {
+      if (err) return done(err);
+      if (user == null)
+        return done(null, false, { message: "No User With That Email" });
+      bcrypt.compare(password, user.password, function (err, result) {
+        if (result)
+          return done(null, user, { message: "Successfully Logged In" });
+        else return done(null, false, { message: "Invalid password" });
+      });
+    });
+  })
+);
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
 });
-passport.deserializeUser(function(id,done){
-	User.findById(id,function(err,user){
-		if (err) return done(err);
-		else return done(null,user);
-	});
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    if (err) return done(err);
+    else return done(null, user);
+  });
 });
 
 module.exports = {
-	addToDatabase : addToDatabase,	
-	passport : passport ,
-	changePassword : changePassword,
-	generateGroups : generateGroups,
-}
+  addToDatabase: addToDatabase,
+  passport: passport,
+  changePassword: changePassword,
+  generateGroups: generateGroups
+};
