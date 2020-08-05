@@ -5,11 +5,11 @@ export const ProjectContext = createContext();
 class ProjectContextProvider extends Component{
     state = {
             projects:[
-                {title:"project1",isapproved:false,comment:"",id:1},
+                {title:"project1",isapproved:true,comment:"",id:1},
                 {title:"project2",isapproved:false,comment:"",id:2},
                 {title:"project3",isapproved:false,comment:"",id:3},
                 {title:"project4",isapproved:false,comment:"",id:4},
-                {title:"project5",isapproved:false,comment:"",id:5}
+                {title:"project5",isapproved:true,comment:"",id:5}
             ]
     }
     Approve = (id) => {
