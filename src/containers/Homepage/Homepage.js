@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Homepage.css";
 import { NavLink } from "react-router-dom";
+
+import VerifyLogin from "../../components/VerifyLogin";
 
 const Homepage = () => {
   return (
     <div className="home-route">
-      <ul>
+      <h1>HOMEPAGE</h1>
+      {/* <ul>
         <li>
           <NavLink to="/student">STUDENT</NavLink>
         </li>
@@ -24,7 +27,8 @@ const Homepage = () => {
         <li>
           <NavLink to="/hod">HOD</NavLink>
         </li>
-      </ul>
+      </ul> */}
+      <VerifyLogin />
     </div>
   );
 };

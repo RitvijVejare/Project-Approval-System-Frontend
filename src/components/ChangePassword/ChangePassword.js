@@ -1,27 +1,67 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import "./ChangePassword.css";
+import SERVER_URL from '../URL';
+import qs from 'qs';
+
+
 
 class ChangePassword extends Component {
-    state = { 
-        newpassword : "",
-        confirmpassword : ""
-     }
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+             newPassword:"",
+             confirmPassword:""
+        }
+    }
+    
 
-     newpasswordHandler = (e) => {
-        this.setState({newpassword:e.target.value});
+    
+
+      pushPassword = () => {
+        axios({
+            method: "post",
+            url: SERVER_URL + "/changePassword",
+            credentials: "include",
+            withCredentials: true,
+            data: qs.stringify({
+              newPassword: this.state.newPassword,
+              confirmPassword: this.state.confirmPassword
+            }),
+            headers: {
+              "content-type": "application/x-www-form-urlencoded;charset=utf-8"
+            }
+          })
+            .then(function (res) {
+              console.log(res);
+            })
+
+            .catch(function (err) {
+              console.log(err);
+            });
+    };
+
+
+
+    newpasswordHandler = (e) => {
+        this.setState({newPassword:e.target.value});
     }
     
     confirmpasswordHandler = (e) => {
-        this.setState({confirmpassword:e.target.value});
+        this.setState({confirmPassword:e.target.value});
     }
     
     handleSubmit = (e) => {
         e.preventDefault();
         if(this.state.newpassword!==this.state.confirmpassword){
+            console.log(this.state);
             alert("Please enter same password in both fields");
-            this.setState({newpassword:"",confirmpassword:""})
+            this.setState({newPassword:"",confirmPassword:""})
         }else{
+            console.log(this.state);
             alert("Both fields are same");
+            this.pushPassword();
         }
     }
 
@@ -38,7 +78,7 @@ class ChangePassword extends Component {
                 className="changepassword-input"
                 type="password"
                 name="password"
-                value={this.state.newpassword}
+                value={this.state.newPassword}
                 onChange={this.newpasswordHandler}
                 required
                 />
@@ -51,7 +91,7 @@ class ChangePassword extends Component {
                 className="changepassword-input"
                 type="password"
                 name="password"
-                value={this.state.confirmpassword}
+                value={this.state.confirmPassword}
                 onChange={this.confirmpasswordHandler}
                 required
                 />
