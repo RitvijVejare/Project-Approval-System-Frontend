@@ -3,18 +3,26 @@ import axios from "axios";
 import qs from "qs";
 import "./LoginPage.css";
 //axios.defaults.withCredentials = true
+import SERVER_URL from "../../components/URL";
+import RedirectOnSubmit from "../../components/RedirectOnSubmit";
 
-const SERVER_URL = "http://127.0.0.1:8000";
+let Data = null;
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       username: "admin",
       password: "******",
-      user: []
+      user: [],
+      redirectToReferrer: false,
+      error: ""
     };
+  }
+
+  afterSubmit() {
+    console.log("aftersubmit");
   }
 
   usernameHandler = event => {
@@ -44,8 +52,18 @@ export default class LoginPage extends Component {
       }
     })
       .then(function (res) {
-        console.log(res);
+        console.log(res.data);
+        Data = res.data.type;
+        // console.log(Data.email);
+        // console.log(Data.department);
+        // this.state.user = res.data;
       })
+      .then(data =>
+        this.setState({
+          user: data,
+          redirectToReferrer: true
+        })
+      )
       .catch(function (err) {
         console.log(err);
       });
@@ -67,20 +85,9 @@ export default class LoginPage extends Component {
     });*/
   };
 
-  componentDidMount() {
-    /*const { username, password } = this.state;
-    axios
-      .post(SERVER_URL+"/login",{
-        email : username,
-        password :  password
-      })
-      .then(response => {
-        console.log(response);
-        //this.setState({ user: user.data });
-      });*/
-  }
-
   render() {
+    const redirectToReferrer = this.state.redirectToReferrer;
+
     return (
       <div>
         <form
@@ -103,7 +110,7 @@ export default class LoginPage extends Component {
             name="email"
             placeholder="username"
             onChange={this.usernameHandler}
-            required="true"
+            required
           />
           <br />
           <br />
@@ -116,7 +123,7 @@ export default class LoginPage extends Component {
             name="password"
             placeholder="password"
             onChange={this.passwordHandler}
-            required="true"
+            required
           />
           <br />
           <br />
@@ -124,7 +131,13 @@ export default class LoginPage extends Component {
             Login
           </button>
         </form>
+        {redirectToReferrer ? (
+          <RedirectOnSubmit condition={true} type={Data} />
+        ) : null}
+        {console.log()}
       </div>
     );
   }
 }
+
+export default LoginPage;
