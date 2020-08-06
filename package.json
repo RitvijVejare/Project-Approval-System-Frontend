@@ -21,7 +21,7 @@
   "proxy": "http://localhost:8000",
   "scripts": {
     "start": "react-scripts start",
-    "dev" : "concurrently \"npm start\" \"cd Backend && npm start\"",
+    "dev": "concurrently \"npm start\" \"cd Backend && npm start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
