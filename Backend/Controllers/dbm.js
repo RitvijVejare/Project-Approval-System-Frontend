@@ -27,8 +27,7 @@ mongoose.connect(process.env.uri,{
 
 function makePassword(length) {
   var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var characters ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   var charactersLength = characters.length;
   for (var i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -92,6 +91,37 @@ async function addToDatabase(admin, email, department, type, groupName = null) {
   await user.save();
 }
 
+async function getStudents(user,by){
+	let admin = null;
+	if (user.type == 'admin') admin = user.id;
+	else admin = user.admin;
+	let items = []
+	if (by=="name"){
+		students = await User.find({type:'student',admin:admin})
+		for (let i = 0 ; i < students.length ;i ++){
+			let student  = students[i];
+			items.push({'email':student.email,'groupName':student.groupName,'department':student.department});
+		}
+
+	}
+	else if (by == "group"){
+		groups  = await Group.find({admin:admin})
+		for (let i = 0 ; i < groups.length ; i ++){
+			let group  = groups[i]
+			let members = []
+			for (let j = 0 ; j < group.members.length ; j ++){
+				user = await User.findById(group.members[j])
+				members.push(user.email)
+			}
+			items.push({'groupName':group.name,'members':members})
+		}
+	}
+	return items
+}
+
+
+
+
 passport.use(
   new localStrategy({ usernameField: "email" }, function (
     email,
@@ -103,8 +133,7 @@ passport.use(
       if (user == null)
         return done(null, false, { message: "No User With That Email" });
       bcrypt.compare(password, user.password, function (err, result) {
-        if (result)
-          return done(null, user, { message: "Successfully Logged In" });
+        if (result) return done(null, user, { message: "Successfully Logged In" });
         else return done(null, false, { message: "Invalid password" });
       });
     });
@@ -124,5 +153,6 @@ module.exports = {
   addToDatabase: addToDatabase,
   passport: passport,
   changePassword: changePassword,
-  generateGroups: generateGroups
+  generateGroups: generateGroups,
+  getStudents : getStudents,
 };
