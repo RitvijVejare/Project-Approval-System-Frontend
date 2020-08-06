@@ -10,7 +10,6 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import HOD from "./containers/HODpage/HOD";
 import ProjectFormHolder from "./components/verification/projectformholder";
-
 import LoginPage from "./containers/LoginPage/LoginPage";
 
 function App() {
