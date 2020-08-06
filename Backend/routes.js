@@ -5,8 +5,11 @@ var passport = dbm.passport;
 require('dotenv').config();
 
 router.get('/user',function(req,res){
-	console.log(JSON.stringify(req.user));
-	res.json(req.user);
+	if (!req.user) return res.status(404).send(null);
+	if (req.user) return res.json({
+		email : req.user.email,
+		type : req.user.type
+	});
 });
 
 router.post('/login',passport.authenticate('local'),function(req,res){
@@ -32,7 +35,7 @@ router.post('/changePassword',function(req,res){
 	}
 	else 
 		return res.status(500).send();
-		
+				
 });
 
 
@@ -83,5 +86,13 @@ router.post('/admin',async function(req,res){
 	}
 });
 
+
+router.get('/getStudents',async function(req,res){
+	if (!req.user) return res.status(404).send();
+	if (req.user.type == 'student') return res.status(404).send();
+	
+	let items = await dbm.getStudents(req.user,req.query.by);
+	res.send(JSON.stringify(items));
+});
 
 module.exports = router;
