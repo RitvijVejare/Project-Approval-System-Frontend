@@ -1,5 +1,4 @@
 import React from 'react';
-//import ProjectForm from './projectform';
 import { NavLink } from "react-router-dom"
 
 const ProjectDetails = (project) => {

@@ -1,5 +1,4 @@
 import React, { createContext, Component} from 'react';
-import ShowComment from '../components/verification/showcomment';
 export const ProjectContext = createContext();
 
 class ProjectContextProvider extends Component{

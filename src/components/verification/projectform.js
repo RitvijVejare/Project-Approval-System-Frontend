@@ -1,6 +1,6 @@
-import React,{useState,useEffect,useContext, useRef} from 'react';
+import React,{useState, useContext, useRef} from 'react';
 import { ProjectContext } from '../../context/projectcontext';
-import ShowComment from './showcomment';
+
 
 const ProjectForm = ({project}) => {
     const prevCommentRef = useRef();

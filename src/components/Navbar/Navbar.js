@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  const [search, SetSearch] = useState(false);
+  //const [search, SetSearch] = useState(false);
 
-  const SubmitSearch = e => {
-    e.preventDefault();
-    alert("Searched");
-  };
+  // const SubmitSearch = e => {
+  //   e.preventDefault();
+  //   alert("Searched");
+  // };
 
-  const openSearch = () => {
-    SetSearch(true);
-  };
+  // const openSearch = () => {
+  //   SetSearch(true);
+  // };
 
-  const SearchClass = search ? "search-input active" : "search-input";
+  // const SearchClass = search ? "search-input active" : "search-input";
 
   return (
     <div>
@@ -22,6 +22,9 @@ const Navbar = () => {
         <ul>
           <li>
             <NavLink to="/login">Login</NavLink>
+          </li>
+          <li>
+            <NavLink to="/changepass">Change Password</NavLink>
           </li>
           <li>
             <NavLink to="/">Sign Out</NavLink>
