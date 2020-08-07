@@ -6,63 +6,110 @@ class Admin extends Component {
     super(props);
 
     this.state = {
-      mail: "",
-      dept: "Computer Science"
+      hod:"",
+      student_file: null,
+      pic:"",
+      ig:''
     };
   }
 
-  mailHandler = event => {
-    this.setState({ mail: event.target.value });
+  hodHandler = e => {
+    this.setState({ hod: e.target.value });
   };
 
-  deptHandler = event => {
-    this.setState({ dept: event.target.value });
+  picHandler = e => {
+    this.setState({ pic: e.target.value });
+  };
+  igHandler = e => {
+    this.setState({ ig: e.target.value });
+  };
+  // studentfileHandler = e => {
+  //   this.fileValidation(e);
+  // };
+
+  submitHandler = e => {
+    e.preventDefault();
+    console.log(this.state);
+    this.setState({hod:"",student_file:null,pic:"",ig:""})
   };
 
-  submitHandler = event => {
-    event.preventDefault();
-    const { mail, dept } = this.state;
-    alert(`dept:${dept} \n mail:${mail}`);
-  };
+  fileValidation = (e) => { 
+    var fileInput =  
+        document.getElementById('file'); 
+      
+    var filePath = fileInput.value; 
+  
+    // Allowing file type 
+    var allowedExtensions = /(\.csv)$/i; 
+      
+    if (!allowedExtensions.exec(filePath)) { 
+        alert('Invalid file type'); 
+        fileInput.value = ''; 
+        return false; 
+    }else{
+      this.setState({ student_file: e.target.files[0] });
+    } 
+}
 
   render() {
     return (
       <div>
         <form onSubmit={this.submitHandler} className="yami-form">
           <div className="yami-title">
-            <label>Create Admin</label>
+            <label>Faculty and Students data</label>
           </div>
-          <label className="yami-label">Admin Email:</label>
+          <label className="yami-label">HOD Email:</label>
           <br />
           <br />
 
           <input
             type="email"
-            name="email"
-            placeholder="enter email"
-            value={this.state.mail}
-            onChange={this.mailHandler}
+            name="hod"
+            placeholder="enter HOD email"
+            value={this.state.hod}
+            onChange={this.hodHandler}
             required
           />
           <br />
           <br />
-          <label className="yami-label">Select Department</label>
+          <label className="yami-label">PIC Email:</label>
           <br />
           <br />
-          <div className="select-admin-container">
-            <select onChange={this.deptHandler} value={this.state.dept}>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Information Technology">
-                Information Technology
-              </option>
-              <option value="Electronics And Telecommunication">
-                Electronics And Telecommunication
-              </option>
-              <option value="Electronics">Electronics</option>
-            </select>
-          </div>
+          <input
+            type="email"
+            name="pic"
+            placeholder="enter PIC email"
+            value={this.state.pic}
+            onChange={this.picHandler}
+            required
+          />
+           <br />
+          <br />
+          <label className="yami-label">IG Email:</label>
+          <br />
+          <br />
+          <input
+            type="email"
+            name="ig"
+            placeholder="enter IG email"
+            value={this.state.ig}
+            onChange={this.igHandler}
+            required
+          />
+          <br />
+          <br />
+          <label className="yami-label">Student Data File:</label>
+          <br />
+          <br />
+          <input
+            type="file"
+            id="file"
+            name="student_file"
+            onChange={this.fileValidation}
+            required
+          />
           <button type="submit" className="yami-btn">
-            Create Admin
+            Upload
           </button>
         </form>
       </div>
